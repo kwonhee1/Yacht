@@ -1,4 +1,4 @@
-package HooYah.YachtUser.redis;
+package HooYah.Redis;
 
 public enum RedisValue {
     EXIST,

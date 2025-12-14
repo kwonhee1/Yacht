@@ -1,4 +1,4 @@
-package HooYah.YachtUser.redis;
+package HooYah.Redis;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -10,18 +10,15 @@ public class ConnectionPool {
 
     private JedisPool pool;
 
-    private ConnectionPool(String host, int port, String password, int maxConnection) {
+    private ConnectionPool(String host, int port, String username, String password, int maxConnection) {
         JedisPoolConfig config = new JedisPoolConfig();
         config.setMaxTotal(maxConnection);
 
-        if(password==null | password.isEmpty())
-            pool = new JedisPool(config, host, port, 2000);
-        else
-            pool = new JedisPool(config, host, port, 2000, password);
+        pool = new JedisPool(config, host, port, 2000, username, password);
     }
 
-    public static ConnectionPool generate(String host, int port, String password, int maxConnection) {
-        instance = new ConnectionPool(host, port, password, maxConnection);
+    public static ConnectionPool generate(String host, int port, String username, String password, int maxConnection) {
+        instance = new ConnectionPool(host, port, password, username, maxConnection);
         return getInstance();
     }
 

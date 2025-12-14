@@ -1,4 +1,4 @@
-package HooYah.YachtUser.redis;
+package HooYah.Redis;
 
 import java.util.Optional;
 
@@ -7,8 +7,8 @@ public class JedisService implements RedisService {
     private final JedisTemplate jedisTemplate;
     private final String category;
 
-    public JedisService(String category) {
-        this.jedisTemplate = new JedisTemplate(ConnectionPool.getInstance());
+    public JedisService(String category, ConnectionPool connectionPool) {
+        this.jedisTemplate = new JedisTemplate(connectionPool);
         this.category = category;
     }
 

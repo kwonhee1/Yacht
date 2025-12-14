@@ -26,6 +26,7 @@ dependencies {
     // redis
     //implementation "org.springframework.boot:spring-boot-starter-data-redis"
     implementation 'redis.clients:jedis:5.2.0'
+    implementation("org.apache.commons:commons-pool2:2.12.0")
 
     // jackson
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.0'

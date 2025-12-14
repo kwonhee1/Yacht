@@ -1,4 +1,4 @@
-package HooYah.YachtUser.redis;
+package HooYah.Redis;
 
 public class RedisException extends RuntimeException {
     public RedisException(String message) {
