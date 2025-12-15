@@ -7,6 +7,7 @@ import HooYah.YachtUser.user.dto.request.LoginDto;
 import HooYah.YachtUser.user.dto.request.RegisterDto;
 import HooYah.YachtUser.user.dto.response.UserInfoDto;
 import HooYah.YachtUser.user.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import java.util.Map;
@@ -52,7 +53,8 @@ public class UserController {
     }
 
     @GetMapping("/api/user")
-    public ResponseEntity getUser(@AuthenticationPrincipal User user) {
+    public ResponseEntity getUser(HttpServletRequest request) {
+        Long userId = Long.parseLong(request.getHeader("userId"));
         return ResponseEntity.ok().body(new SuccessResponse(HttpStatus.OK, "success", UserInfoDto.of(user)));
     }
 

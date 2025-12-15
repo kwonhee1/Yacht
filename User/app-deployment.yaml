@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: msa-user
+  labels:
+    app: user
+spec:
+  replicas: 1 # 파드(Pod)의 복제본 수 
+  selector:
+    matchLabels:
+      app: user
+  template:
+    metadata:
+      labels:
+        app: user
+    spec:
+      containers:
+      - name: msa-user
+        image: msa-user # docker img
+        imagePullPolicy: Never # IfNotPresent
+        ports:
+        - containerPort: 8081
+        volumeMounts:
+          - name: env
+            mountPath: /app/.env
+          - name: jar
+            mountPath: /app/app.jar
+      volumes:
+        - name: env
+          hostPath:
+            path: /home/ubuntu/msa/user/.env
+            type: File
+        - name: jar
+          hostPath:
+            path: /home/ubuntu/msa/user/app.jar
+            type: File
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: msa-user
+spec:
+  selector:
+    app: user
+  ports:
+    - protocol: TCP
+      port: 8081
+      targetPort: 8081
+  type: LoadBalancer
