@@ -1,6 +1,6 @@
 servers:
-  - name: serverA
-    host: http://1.1.1.1
+  - name: mainServer
+    host: http://localhost
     docker:
       ca: /path/ca.pem
       cert: /path/cert.pem
@@ -16,20 +16,22 @@ servers:
     count: 1
 
 modules:
-  - match-uri: /user/**
+  - match-uri: /user/
     services:
       - name: user
-        server: serverA
-        port: 8080
+        server: mainServer
+        port: 9091
     subs:
       - name: user
         server: sub
         port: 8080
 
-  - match-uri: /yacht/**
+  - match-uri: /yacht/
     services:
-      - server: serverA
-        port: 8081
+      - name: yacht
+        server: mainServer
+        port: 9092
     subs:
-      - server: sub
+      - name: yacht
+        server: sub
         port: 8081
