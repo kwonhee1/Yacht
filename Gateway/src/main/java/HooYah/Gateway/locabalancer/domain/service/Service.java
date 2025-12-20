@@ -1,9 +1,7 @@
 package HooYah.Gateway.locabalancer.domain.service;
 
 import HooYah.Gateway.locabalancer.domain.server.Server;
-import HooYah.Gateway.locabalancer.domain.vo.Host;
 import HooYah.Gateway.locabalancer.domain.vo.Port;
-import HooYah.Gateway.locabalancer.domain.vo.Url;
 
 public class Service {
 
@@ -11,14 +9,14 @@ public class Service {
 
     private String name;
 
-    private Server server;
-    private Port port;
+    private final Server server;
+    private final Port port;
 
     private ServiceStatus lastStatus;
 
     private Service(String name, Server server, Port port, boolean isRunning) {
         this.name = name;
-        this.server = server;
+        this.server = server; 
         this.port = port;
         this.isRunning = isRunning;
 
@@ -34,24 +32,22 @@ public class Service {
         return new Service(name, server, port, false);
     }
 
+    // getter
+
     public String getName() {
         return name;
     }
 
-    public Url getUrl() {
-        return new Url(server.getHost(), port);
+    public Port getPort() {
+        return port;
     }
 
-    public Host getHost() {
-        return server.getHost();
+    public Server getServer() {
+        return server;
     }
 
     public ServiceStatus getLastStatus() {
         return lastStatus;
-    }
-
-    public Port getPort() {
-        return port;
     }
 
     @Override

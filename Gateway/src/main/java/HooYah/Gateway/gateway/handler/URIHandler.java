@@ -5,6 +5,8 @@ import HooYah.Gateway.locabalancer.conf.Config;
 import HooYah.Gateway.locabalancer.conf.ServerConfig;
 import HooYah.Gateway.locabalancer.controller.LoadBalancerController;
 import HooYah.Gateway.locabalancer.domain.vo.Api;
+import HooYah.Gateway.locabalancer.domain.vo.Uri;
+import HooYah.Gateway.locabalancer.domain.vo.Url;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.FullHttpRequest;
@@ -27,13 +29,16 @@ public class URIHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
     protected void channelRead0(ChannelHandlerContext ctx, FullHttpRequest msg) throws Exception {
         String requestUri = msg.uri();
 
-        Api proxy = loadBalancerController.loadBalance(requestUri);
+        Url proxy = loadBalancerController.loadBalance(requestUri);
+        String proxyHost = proxy.getHost().getHost();
+        int proxyPort = proxy.getPort().getPort();
+        String proxyUri = proxy.getUri().toProxyUri(new Uri(requestUri));
 
-        ctx.channel().attr(AttributeConfig.Host).set(proxy.getHost());
-        ctx.channel().attr(AttributeConfig.Port).set(proxy.getPort());
-        msg.setUri(proxy.toProxyUri());
+        ctx.channel().attr(AttributeConfig.Host).set(proxyHost);
+        ctx.channel().attr(AttributeConfig.Port).set(proxyPort);
+        msg.setUri(proxyUri);
 
-        logger.info("proxy " + requestUri + " -> " + proxy.toString());
+        logger.info("proxy " + requestUri + " -> " + proxyHost + ":" + proxyPort + proxyUri);
 
         ctx.fireChannelRead(msg);
     }

@@ -1,7 +1,7 @@
 package HooYah.Gateway.locabalancer.domain.server.status;
 
 import HooYah.Gateway.locabalancer.domain.service.ServiceStatus;
-import com.google.protobuf.Api;
+import HooYah.Gateway.locabalancer.domain.vo.Api;
 
 public class StatusChecker {
 

@@ -7,6 +7,7 @@ import HooYah.Gateway.locabalancer.domain.server.Server;
 import HooYah.Gateway.locabalancer.domain.service.Service;
 import HooYah.Gateway.locabalancer.domain.vo.Api;
 import HooYah.Gateway.locabalancer.domain.vo.Uri;
+import HooYah.Gateway.locabalancer.domain.vo.Url;
 import java.util.List;
 
 public class LoadBalancerController {
@@ -21,13 +22,14 @@ public class LoadBalancerController {
         modules = config.getServerConfig().getModules();
     }
 
-    public Api loadBalance(String uri) {
+    public Url loadBalance(String uri) {
         Uri requestUri = new Uri(uri);
 
-        Module machtedModule = modules.matching(requestUri);
-        Service matchedService = machtedModule.matching();
+        Module matchedModule = modules.matching(requestUri);
+        Service matchedService = matchedModule.matching();
+        Server matchedServer = matchedService.getServer();
 
-        return new Api(matchedService.getProtocol(), matchedService.getUrl(), machtedModule.toProxyUri(requestUri));
+        return new Url(matchedServer.getProtocol(), matchedServer.getHost(), matchedService.getPort(), matchedModule.getUri());
     }
 
 }

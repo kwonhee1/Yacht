@@ -2,6 +2,7 @@ package HooYah.Gateway.locabalancer.domain.server.property;
 
 import HooYah.Gateway.locabalancer.domain.server.Server;
 import HooYah.Gateway.locabalancer.domain.vo.Host;
+import HooYah.Gateway.locabalancer.domain.vo.Protocol;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,11 +13,13 @@ import lombok.Setter;
 public class ServerProperty {
 
     private String name;
-    private String host; // protocol, ip
+    private String host;
+    private String protocol;
     private int count;
 
     public Server toServer() {
-        return new Server(name, new Host(host), count);
+        Protocol protocolEnum = Protocol.getProtocol(protocol);
+        return new Server(name, protocolEnum, new Host(host), count);
     }
 
 }

@@ -1,32 +1,21 @@
 package HooYah.Gateway.locabalancer.domain.vo;
 
-import java.net.URI;
-
 public class Api {
 
-    private Protocol protocol;
-    private Url url; // http://localhost:8080
-    private Uri uri; // /public/test // except "/user/" !!
+    private String httpMethod; // GET, POST, PUT, DELETE, etc.
+    private String bodyType; // JSON, XML, etc. (optional, nullable)
+    private final Url url; // <protocol>://<host>:<port>/<uri>
 
-    public Api(Url url, Uri uri) {
+    public Api(Url url) {
         this.url = url;
-        this.uri = uri;
     }
 
-    public String getHost() {
-        return url.getHost().toString();
+    public String getHttpMethod() {
+        return httpMethod;
     }
 
-    public int getPort() {
-        return url.getPort().getPort();
-    }
-
-    public String toProxyUri() {
-        return uri.getUri();
-    }
-
-    public Uri getUri() {
-        return uri;
+    public String getBodyType() {
+        return bodyType;
     }
 
     public Url getUrl() {
@@ -36,8 +25,9 @@ public class Api {
     @Override
     public String toString() {
         return "Api{" +
-                "url=" + url +
-                ", uri=" + uri +
+                "httpMethod='" + httpMethod + '\'' +
+                ", bodyType='" + bodyType + '\'' +
+                ", url=" + url +
                 '}';
     }
 }

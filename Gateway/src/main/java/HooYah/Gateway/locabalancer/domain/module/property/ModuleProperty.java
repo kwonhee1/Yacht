@@ -4,7 +4,7 @@ import HooYah.Gateway.locabalancer.domain.module.Module;
 import HooYah.Gateway.locabalancer.domain.service.Service;
 import HooYah.Gateway.locabalancer.domain.service.property.ServiceProperty;
 import HooYah.Gateway.locabalancer.domain.server.Server;
-import HooYah.Gateway.locabalancer.domain.vo.UriMatcher;
+import HooYah.Gateway.locabalancer.domain.vo.Uri;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import lombok.Getter;
@@ -28,7 +28,8 @@ public class ModuleProperty {
             .map(sp -> sp.toService(servers, false))
             .toList();
 
-        return new Module(new UriMatcher(matchUri), serviceList, subServiceList);
+        Uri uri = new Uri(matchUri);
+        return new Module(uri, serviceList, subServiceList);
     }
 
 }

@@ -6,18 +6,20 @@ import HooYah.Gateway.locabalancer.domain.vo.Protocol;
 import java.util.ArrayList;
 import java.util.List;
 
+// server: protocol, host
 public class Server {
 
     private String name;
-    private Protocol protocol;
-    private Host host;
+    private final Protocol protocol;
+    private final Host host;
 
     private int maxCount;
 
     private List<Service> services = new ArrayList<>();
 
-    public Server(String name, Host host, int maxCount) {
+    public Server(String name, Protocol protocol, Host host, int maxCount) {
         this.name = name;
+        this.protocol = protocol;
         this.host = host;
         this.maxCount = maxCount;
     }
@@ -28,6 +30,10 @@ public class Server {
 
     public void deleteService(Service service) {
         services.remove(service);
+    }
+
+    public Protocol getProtocol() {
+        return protocol;
     }
 
     public Host getHost() {
@@ -42,6 +48,7 @@ public class Server {
     public String toString() {
         return "Server{" +
                 "name='" + name + '\'' +
+                ", protocol=" + protocol +
                 ", host=" + host +
                 ", maxCount=" + maxCount +
                 // ", services=" + services +

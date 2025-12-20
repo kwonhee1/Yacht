@@ -1,6 +1,7 @@
 servers:
   - name: mainServer
-    host: http://localhost
+    host: localhost
+    protocol: http
     docker:
       ca: /path/ca.pem
       cert: /path/cert.pem
@@ -8,7 +9,8 @@ servers:
     count: 3
 
   - name: sub
-    host: http://0.0.0.0
+    host: 0.0.0.0
+    protocol: http
     docker:
       ca: /path/ca.pem
       cert: /path/cert.pem

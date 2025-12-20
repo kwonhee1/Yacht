@@ -1,23 +1,20 @@
 package HooYah.Gateway.locabalancer.domain.vo;
 
-public class Host { // http://localhost
+public class Host {
 
-    private final Protocol protocol; // http
     private final String host; // localhost
 
-    public Host(Protocol protocol, String host) {
+    public Host(String host) {
         this.host = host;
-        this.protocol = protocol;
     }
 
-    public Host(String hostStr) { // http://ip
-        String[] hostStrs =  hostStr.split(":");
-        this.protocol = Protocol.getProtocol(hostStrs[0]); // http
-        this.host = hostStrs[1].substring(2, hostStrs[1].length());
+    public String getHost() {
+        return host;
     }
 
+    @Override
     public String toString() {
-        return protocol.name() + "://" + host;
+        return host;
     }
 
 }
