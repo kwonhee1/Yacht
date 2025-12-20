@@ -1,5 +1,5 @@
 .env
-Gateway/.env.properties
+Gateway/**/**.properties
 .json
 **.txt
 **.text
