@@ -15,6 +15,12 @@ public class ConnectionPool {
         config.setMaxTotal(maxConnection);
 
         pool = new JedisPool(config, host, port, 2000, username, password);
+
+        try {
+            pool.getResource();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static ConnectionPool generate(String host, int port, String username, String password, int maxConnection) {
